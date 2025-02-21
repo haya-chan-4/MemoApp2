@@ -1,14 +1,66 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import 'expo-router/entry'
-import Hello from '../components/Hello'
+
 
 
 const Index = (): JSX.Element => {
   return (
-    <View>
-      <Text>text</Text>
-      <Hello >World</Hello>
+    <View style={styles.container}>
+      <View>
+
+        <View>
+          <Text>MemoApp</Text>
+          <Text>ログアウト</Text>
+        </View>
+
+        <View>
+          <View>
+            <View>
+              <Text>やることリスト</Text>
+              <Text>2025年2月22日</Text>
+            </View>
+            <View>
+              <Text>×</Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <View>
+            <View>
+              <Text>アイデア</Text>
+              <Text>2025年2月22日</Text>
+            </View>
+            <View>
+              <Text>×</Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <View>
+            <View>
+              <Text>買い物リスト</Text>
+              <Text>2025年2月22日</Text>
+            </View>
+            <View>
+              <Text>×</Text>
+            </View>
+          </View>
+        </View>
+
+      </View>
+      <View>
+        <Text>+</Text>
+      </View>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
+
 export default Index
