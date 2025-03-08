@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, type ViewStyle, type TextStyle } from 'react-native'
 
-type Props = {
+interface Props {
   label: string,
   color?: string,
   buttonStyle?: ViewStyle,
