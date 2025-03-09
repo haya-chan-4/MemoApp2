@@ -3,17 +3,19 @@ import { Feather } from '@expo/vector-icons'
 
 interface Props {
   iconName: keyof typeof Feather.glyphMap,
-  style?: ViewStyle
+  style?: ViewStyle,
+  onPress?: () => void
 }
 
 const CircleButton = (props: Props): JSX.Element => {
-  const { iconName, style } = props
-
+  const { iconName, style, onPress } = props
   return (
-    <TouchableOpacity style={[
-      styles.circleButton,
-      style
-    ]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.circleButton,
+        style
+      ]}>
       <Feather name={iconName} size={40} color="#ffffff" />
     </TouchableOpacity>
   )

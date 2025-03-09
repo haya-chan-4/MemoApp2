@@ -1,11 +1,15 @@
 import { View, StyleSheet, Text, ScrollView } from 'react-native'
-import Header from '../../components/Header'
+import { router } from 'expo-router'
 import CircleButton from '../../components/CircleButton'
+
+const handlePress = (): void => {
+  //編集画面へ遷移
+  router.push('/memo/edit')
+}
 
 const Detail = (): JSX.Element => {
   return (
     <View style={styles.container}>
-      <Header title="MemoApp" />
       <View style={styles.memoHeader}>
         <Text style={styles.memoHeaderTitle}>買い物リスト</Text>
         <Text style={styles.memoHeaderDate}>2025年2月22日</Text>
@@ -26,10 +30,11 @@ const Detail = (): JSX.Element => {
         </Text>
       </ScrollView>
       <CircleButton
+        onPress={handlePress}
         iconName="check"
         style={{
           backgroundColor: '#467fd3',
-          top: 150,
+          top: 60,
           bottom: 'auto'
         }}
       />

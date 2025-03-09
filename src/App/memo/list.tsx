@@ -1,16 +1,16 @@
 import { View, StyleSheet } from 'react-native'
 import 'expo-router/entry'
+import { router } from 'expo-router'
 import CircleButton from '../../components/CircleButton'
-import Header from '../../components/Header'
 import MemoListItem from '../../components/MemoListItem'
 
+const handlePress = (): void => {
+  router.push('/memo/create')
+}
 
 const List = (): JSX.Element => {
   return (
     <View style={styles.container}>
-      {/* header */}
-      <Header title="MemoApp" rightContent="ログアウト" />
-      {/* header */}
       {/* todo area */}
       <View>
         <MemoListItem title="やることリスト" date="2025年2月22日" iconName="trash-2" />
@@ -20,6 +20,7 @@ const List = (): JSX.Element => {
       {/* todo area */}
       {/* button */}
       <CircleButton
+        onPress={handlePress}
         iconName="plus"
         style={{
           backgroundColor: '#467fd3',

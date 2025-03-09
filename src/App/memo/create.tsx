@@ -1,15 +1,19 @@
 import {  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native'
-import Header from '../../components/Header'
 import CircleButton from '../../components/CircleButton'
+import { router } from 'expo-router'
+
+const handlePress = (): void => {
+  router.back()
+}
 
 const Create = (): JSX.Element => {
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
-      <Header title="MemoAPP" />
       <ScrollView style={styles.memoEditContainer}>
-        <TextInput multiline style={styles.memoEditInput} value='' />
+        <TextInput multiline style={styles.memoEditInput} value='メモを入力' />
       </ScrollView>
       <CircleButton
+        onPress={handlePress}
         iconName="check"
         style={{
           backgroundColor: '#467fd3',

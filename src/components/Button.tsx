@@ -1,37 +1,45 @@
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
 
 interface Props {
   label: string
-  onPress: () => void
+  onPress?: () => void
+  destination?: string
 }
 
 const Button = (props: Props): JSX.Element => {
-  const { label, onPress } = props
+  const { label, onPress, destination } = props
+
+  const handlePress = (): void => {
+    if (destination) {
+      router.push(destination)
+    }
+    if (onPress) {
+      onPress()
+    }
+  }
+
   return (
-    <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-      <Text style={styles.buttonLabel}>{label}</Text>
+    <TouchableOpacity style={styles.button} onPress={handlePress}>
+      <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   )
 }
 
-
-
 const styles = StyleSheet.create({
-
-  buttonContainer: {
-    backgroundColor: '#467fd3',
+  button: {
+    backgroundColor: '#467FD3',
     borderRadius: 4,
-    marginBottom: 24,
-    alignItems: 'center',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    marginBottom: 24
   },
-  buttonLabel: {
-    color: '#fff',
+  label: {
     fontSize: 16,
     lineHeight: 32,
-    fontWeight: 'bold',
     paddingVertical: 8,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    color: '#ffffff'
   }
 })
+
 export default Button
