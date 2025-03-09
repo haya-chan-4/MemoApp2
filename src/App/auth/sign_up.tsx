@@ -5,16 +5,16 @@ import Input from '../../components/Input'
 import Footer from '../../components/Footer'
 import AuthFormTitle from '../../components/AuthFormTitle'
 
-const LogIn = (): JSX.Element => {
+const SignUp = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <Header title="MemoApp" />
       <View style={styles.inner}>
-        <AuthFormTitle title="Log In" />
+        <AuthFormTitle title="Sign Up" />
         <Input value="email" />
         <Input value="password" />
         <Button label="submit" />
-        <Footer text="Not registered" linkText="Sign Up here" />
+        <Footer text="Already registered?" linkText="Log In here" />
       </View>
     </View>
   )
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 27
   }
 })
-export default LogIn
+export default SignUp

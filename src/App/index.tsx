@@ -7,6 +7,7 @@ const Index = (): JSX.Element => {
     // <Redirect href="/memo/edit" />
     // <Redirect href="/memo/create" />
     <Redirect href="/auth/log_in" />
+    // <Redirect href="/auth/sign_up" />
   )
 }
 
