@@ -13,9 +13,9 @@ const List = (): JSX.Element => {
       {/* header */}
       {/* todo area */}
       <View>
-        <MemoListItem title="やることリスト" date="2025年2月22日" text="×" />
-        <MemoListItem title="やることリスト" date="2025年2月22日" text="×" />
-        <MemoListItem title="やることリスト" date="2025年2月22日" text="×" />
+        <MemoListItem title="やることリスト" date="2025年2月22日" iconName="trash-2" />
+        <MemoListItem title="やることリスト" date="2025年2月22日" iconName="trash-2" />
+        <MemoListItem title="やることリスト" date="2025年2月22日" iconName="trash-2" />
       </View>
       {/* todo area */}
       {/* button */}

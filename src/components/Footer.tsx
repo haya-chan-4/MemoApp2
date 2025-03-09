@@ -1,23 +1,29 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Link } from 'expo-router'
 
 interface Props {
   text: string,
   linkText: string,
+  link: string,
 }
 
 const Footer = (props: Props): JSX.Element => {
-  const { text, linkText } = props
+  const { text, linkText, link } = props
   return (
     <View style={styles.footer}>
       <Text style={styles.footerText}>{text}</Text>
-      <Text style={styles.footerLink}>{linkText}</Text>
+      <Link href={link} asChild>
+        <TouchableOpacity>
+          <Text style={styles.footerLink}>{linkText}</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   )
 }
 const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   footerText: {

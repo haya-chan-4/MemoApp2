@@ -13,8 +13,8 @@ const LogIn = (): JSX.Element => {
         <AuthFormTitle title="Log In" />
         <Input value="email" />
         <Input value="password" />
-        <Button label="submit" />
-        <Footer text="Not registered" linkText="Sign Up here" />
+        <Button label="submit" onPress={() => {}} />
+        <Footer text="Not registered" linkText="Sign Up here" link='/auth/sign_up' />
       </View>
     </View>
   )
