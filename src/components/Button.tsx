@@ -12,7 +12,7 @@ const Button = (props: Props): JSX.Element => {
 
   const handlePress = (): void => {
     if (destination) {
-      router.push(destination)
+      router.replace(destination)
     }
     if (onPress) {
       onPress()

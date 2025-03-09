@@ -1,16 +1,31 @@
 import { View, StyleSheet } from 'react-native'
+import { useState } from 'react'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import Footer from '../../components/Footer'
 import AuthFormTitle from '../../components/AuthFormTitle'
 
 const LogIn = (): JSX.Element => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
         <AuthFormTitle title="Log In" />
-        <Input value="email" />
-        <Input value="password" />
+        <Input
+          placeholder="email"
+          keyboardType="email-address"
+          value={email}
+          secureTextEntry={false}
+          onChangeText={(text: string) => {setEmail(text)}}
+        />
+        <Input
+          placeholder="password"
+          keyboardType="default"
+          value={password}
+          secureTextEntry
+          onChangeText={(text: string) => {setPassword(text)}}
+        />
         <Button
           label="submit"
           destination="/memo/list"

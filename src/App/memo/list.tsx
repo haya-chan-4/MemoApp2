@@ -1,14 +1,29 @@
 import { View, StyleSheet } from 'react-native'
 import 'expo-router/entry'
-import { router } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
+import { useEffect } from 'react'
 import CircleButton from '../../components/CircleButton'
 import MemoListItem from '../../components/MemoListItem'
+import LogOutButton from '../../components/LogOutButton'
 
 const handlePress = (): void => {
   router.push('/memo/create')
 }
+const logOut = (): void => {
+  router.replace('/auth/log_in')
+}
 
 const List = (): JSX.Element => {
+  const navigation = useNavigation()
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <LogOutButton onPress={logOut} />
+        )
+      }
+    })
+  }, [])
   return (
     <View style={styles.container}>
       {/* todo area */}

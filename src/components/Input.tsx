@@ -1,15 +1,38 @@
-import { StyleSheet, TextInput } from 'react-native'
-
+import { View, TextInput, StyleSheet } from 'react-native'
+import { useState } from 'react'
 interface Props {
-  value: string,
+  value: string
+  onChangeText: (text: string) => void
+  placeholder?: string
+  secureTextEntry?: boolean
+  keyboardType?: 'default' | 'email-address' | 'numeric'
 }
 
 const Input = (props: Props): JSX.Element => {
-  const { value } = props
+  const [value, setValue] = useState(props.value)
+  const {
+    placeholder,
+    secureTextEntry,
+    keyboardType = 'default'
+  } = props
+
   return (
-    <TextInput style={styles.input} value={value} />
+    <View>
+      <TextInput
+        value={value}
+        onChangeText={(text: string) => {
+          setValue(text)
+        }}
+        placeholder={placeholder}
+        secureTextEntry={secureTextEntry}
+        keyboardType={keyboardType}
+        autoCapitalize="none"
+        style={styles.input}
+      />
+    </View>
   )
 }
+
 const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
@@ -22,4 +45,5 @@ const styles = StyleSheet.create({
     marginBottom: 16
   }
 })
+
 export default Input
