@@ -1,26 +1,32 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
+// import { router } from 'expo-router'
 
 interface Props {
   label: string
   onPress?: () => void
   destination?: string
+  email?: string
+  password?: string
 }
 
 const Button = (props: Props): JSX.Element => {
-  const { label, onPress, destination } = props
+  const {
+    label,
+    onPress
+    // destination
+  } = props
 
-  const handlePress = (): void => {
-    if (destination) {
-      router.replace(destination)
-    }
-    if (onPress) {
-      onPress()
-    }
-  }
+  // const handlePress = (): void => {
+  //   if (onPress) {
+  //     onPress()
+  //   }
+  //   if (destination) {
+  //     router.replace(destination)
+  //   }
+  // }
 
   return (
-    <TouchableOpacity style={styles.button} onPress={handlePress}>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   )
