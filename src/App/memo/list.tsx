@@ -1,5 +1,5 @@
-import { View, StyleSheet } from 'react-native'
-import 'expo-router/entry'
+import { View, StyleSheet, TextInputEndEditingEventData } from 'react-native'
+// import 'expo-router/entry'
 import { router, useNavigation } from 'expo-router'
 import { useEffect } from 'react'
 import CircleButton from '../../components/CircleButton'
@@ -9,19 +9,15 @@ import LogOutButton from '../../components/LogOutButton'
 const handlePress = (): void => {
   router.push('/memo/create')
 }
-const logOut = (): void => {
-  router.replace('/auth/log_in')
-}
+// const logOut = (): void => {
+//   router.replace('/auth/log_in')
+// }
 
 const List = (): JSX.Element => {
   const navigation = useNavigation()
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => {
-        return (
-          <LogOutButton onPress={logOut} />
-        )
-      }
+      headerRight: () => { return <LogOutButton /> }
     })
   }, [])
   return (

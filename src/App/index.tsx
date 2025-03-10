@@ -5,15 +5,13 @@ import { useEffect } from 'react'
 
 const Index = (): JSX.Element => {
   useEffect(() => {
-    onAuthStateChanged(auth, (user) =>{
-      if(user !== null){
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
         router.replace('/memo/list')
       }
     })
-  }, []);
-  return (
-    <Redirect href="/auth/sign_up" />
-  )
+  }, [])
+  return <Redirect href="/auth/log_in" />
 }
 
 export default Index
