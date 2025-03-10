@@ -12,7 +12,7 @@ const Footer = (props: Props): JSX.Element => {
   return (
     <View style={styles.footer}>
       <Text style={styles.footerText}>{text}</Text>
-      <Link href={link} asChild>
+      <Link href={link} asChild replace>
         <TouchableOpacity>
           <Text style={styles.footerLink}>{linkText}</Text>
         </TouchableOpacity>
