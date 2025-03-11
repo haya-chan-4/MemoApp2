@@ -1,22 +1,23 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { Link } from 'expo-router'
-
+import { type Memo } from '../../types/memo'
 interface Props {
-  title: string,
-  date: string,
   iconName: keyof typeof Feather.glyphMap,
-
+  memo: Memo
 }
 
-const MemoListItem = (props: Props): JSX.Element => {
-  const { title, date, iconName } = props
+const MemoListItem = (props: Props): JSX.Element | null => {
+  const { iconName, memo } = props
+  const { bodyText, createdAt } = memo
+  if (bodyText === null || createdAt === null ) {return null}
+  const dateString = memo.createdAt.toDate().toLocaleDateString()
   return (
     <Link href='/memo/detail' asChild>
       <TouchableOpacity style={styles.memoListItem} >
         <View>
-          <Text style={styles.memoListItemTitle}>{title}</Text>
-          <Text style={styles.memoListItemDate}>{date}</Text>
+          <Text numberOfLines={1} style={styles.memoListItemTitle}>{bodyText}</Text>
+          <Text style={styles.memoListItemDate}>{dateString}</Text>
         </View>
         <TouchableOpacity>
           <Feather name={iconName} size={20} color="#aaa" />
