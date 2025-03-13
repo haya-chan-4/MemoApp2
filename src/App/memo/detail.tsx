@@ -6,18 +6,17 @@ import { db, auth } from '../../config/firebase'
 import { type Memo } from '../../../types/memo'
 import { useEffect, useState } from 'react'
 
-const handlePress = (): void => {
+const handlePress = (id: string): void => {
   //編集画面へ遷移
-  router.push('/memo/edit')
+  router.push({ pathname: '/memo/edit', params: { id } })
 }
 
 const Detail = (): JSX.Element => {
-  const { id } = useLocalSearchParams()
-  console.log(id)
+  const id = String(useLocalSearchParams().id)
   const [memo, setMemo] = useState<Memo | null>(null)
   useEffect(() => {
     if (auth.currentUser === null) { return }
-    const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, String(id))
+    const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, id)
     const unsub = onSnapshot(ref, (memoDoc) => {
       const { bodyText, createdAt } = memoDoc.data() as Memo
       setMemo({
@@ -38,7 +37,7 @@ const Detail = (): JSX.Element => {
         <Text style={styles.memoContentText}>{memo?.bodyText}</Text>
       </ScrollView>
       <CircleButton
-        onPress={handlePress}
+        onPress={() => handlePress(id)}
         iconName="check"
         style={{
           backgroundColor: '#467fd3',

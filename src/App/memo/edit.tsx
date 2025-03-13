@@ -1,20 +1,55 @@
-import {  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native'
-import { router } from 'expo-router'
+import { TextInput, StyleSheet, ScrollView, Alert } from 'react-native'
+import { router, useLocalSearchParams } from 'expo-router'
 import CircleButton from '../../components/CircleButton'
+import KeyboardAvoidingView from '../../components/KeyboardAvoidingView'
+import { useState, useEffect } from 'react'
+import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
+import { db, auth } from '../../config/firebase'
+import { type Memo } from '../../../types/memo'
 
-const handlePress = (): void => {
-  router.back()
+const handlePress = (id: string, bodyText: string): void => {
+  if (auth.currentUser === null) return
+  const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, id)
+  setDoc(ref, {
+    bodyText,
+    updatedAt: Timestamp.fromDate(new Date())
+  })
+    .then(() => {
+      router.back()
+    })
+    .catch((error) => {
+      console.log(error)
+      Alert.alert('エラーが発生しました')
+    })
 }
 
 const Edit = (): JSX.Element => {
+  const id = String(useLocalSearchParams().id)
+  const [bodyText, setBodyText] = useState('')
+  useEffect(() => {
+    if (auth.currentUser === null) return
+    const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, id)
+    getDoc(ref).then((docRef) => {
+      const remoteBodyText = docRef.data()?.bodyText
+      setBodyText(remoteBodyText || '')
+    })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, []);
   return (
-    <KeyboardAvoidingView behavior="height" style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <ScrollView style={styles.memoEditContainer}>
-        <TextInput multiline style={styles.memoEditInput} value='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium voluptatibus perspiciatis, nulla cumque eos quasi alias pariatur, aspernatur corrupti voluptates ea harum qui ut illo at. Pariatur quaerat ratione delectus.
-        ' />
+        <TextInput
+          autoFocus
+          multiline
+          style={styles.memoEditInput}
+          value={bodyText}
+          onChangeText={(text) => setBodyText(text)}
+        />
       </ScrollView>
       <CircleButton
-        onPress={handlePress}
+        onPress={() => handlePress(id, bodyText)}
         iconName="check"
         style={{
           backgroundColor: '#467fd3',
@@ -33,12 +68,12 @@ const styles = StyleSheet.create({
   },
   memoEditContainer: {
     backgroundColor: "#fdfdfd",
-    paddingHorizontal: 27,
-    paddingVertical: 32,
-    flex:1
+    flex: 1
   },
   memoEditInput: {
     textAlignVertical: 'top',
+    paddingHorizontal: 27,
+    paddingVertical: 32,
     fontSize: 16,
     lineHeight: 24,
     color: '#000',
