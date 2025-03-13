@@ -32,7 +32,6 @@ const List = (): JSX.Element => {
     const unsub = onSnapshot(q, (snapshot) => {
       const list: Memo[] = []
       snapshot.forEach((doc) => {
-        console.log(doc.data(), 'memo')
         const { bodyText, createdAt } = doc.data()
         list.push({
           id: doc.id,

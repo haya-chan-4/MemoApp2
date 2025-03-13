@@ -1,6 +1,10 @@
 import { View, StyleSheet, Text, ScrollView } from 'react-native'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import CircleButton from '../../components/CircleButton'
+import { onSnapshot, doc } from 'firebase/firestore'
+import { db, auth } from '../../config/firebase'
+import { type Memo } from '../../../types/memo'
+import { useEffect, useState } from 'react'
 
 const handlePress = (): void => {
   //編集画面へ遷移
@@ -8,26 +12,30 @@ const handlePress = (): void => {
 }
 
 const Detail = (): JSX.Element => {
+  const { id } = useLocalSearchParams()
+  console.log(id)
+  const [memo, setMemo] = useState<Memo | null>(null)
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, String(id))
+    const unsub = onSnapshot(ref, (memoDoc) => {
+      const { bodyText, createdAt } = memoDoc.data() as Memo
+      setMemo({
+        id: memoDoc.id,
+        bodyText,
+        createdAt
+      })
+    })
+    return unsub
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.memoHeader}>
-        <Text style={styles.memoHeaderTitle}>買い物リスト</Text>
-        <Text style={styles.memoHeaderDate}>2025年2月22日</Text>
+        <Text style={styles.memoHeaderTitle} numberOfLines={1}>{memo?.bodyText}</Text>
+        <Text style={styles.memoHeaderDate}>{memo?.createdAt?.toDate().toLocaleDateString('ja-JP')}</Text>
       </View>
       <ScrollView style={styles.memoContent}>
-        <Text style={styles.memoContentText}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ratione porro ipsa sequi cupiditate quis saepe consectetur nesciunt cum in? Cum accusantium eius soluta voluptatibus non dolorem doloremque quam fugit.
-        </Text>
+        <Text style={styles.memoContentText}>{memo?.bodyText}</Text>
       </ScrollView>
       <CircleButton
         onPress={handlePress}
@@ -70,14 +78,15 @@ const styles = StyleSheet.create({
     paddingTop: 8
   },
   memoContent: {
-    paddingVertical: 32,
     paddingHorizontal: 27,
     backgroundColor: '#fdfdfd'
   },
   memoContentText: {
     fontSize: 16,
+    paddingVertical: 32,
     lineHeight: 24,
-    color: '#000'
+    color: '#000',
+
   }
 })
 export default Detail
